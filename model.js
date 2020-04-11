@@ -17,6 +17,7 @@ function getGameList(callbackFunction) {
 }
 
 // AICI SE STERGE JOCUL ==========
+//definim functia
 function deleteGame(gameID, callbackFunction) {
   fetch(apiURL + "/games/" + gameID, {
     method: "DELETE",
@@ -48,3 +49,23 @@ function createGameRequest(game, callbackCreateGame) {
     });
 }
 //===========================
+
+//AICI FACEM UPDATE LA GAME
+
+function updateGameRequest(gameId, updatedGame, callbackUpdateGame) {
+  fetch(apiURL + "/games/" + gameId, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: updatedGame,
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (updatedResponse) {
+      console.log(updatedResponse);
+      callbackUpdateGame(updatedResponse);
+    });
+}
+//================================
