@@ -34,7 +34,7 @@ function createDomElement(gameObj) {
     let input = updateGameElement.childNodes[0][0];
     input.value += itm;
     console.log(input.value);
-    let itm1 = gameELement.childNodes[1].innerText;
+    let itm1 = gameELement.childNodes[2].innerText;
     console.log(itm1);
     let input1 = updateGameElement.childNodes[0][1];
     input1.value += itm1;
