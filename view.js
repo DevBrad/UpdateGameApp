@@ -1,9 +1,11 @@
+// ================= 1 ========================
 getGameList(function (arrayOfGames) {
   for (var i = 0; i < arrayOfGames.length; i++) {
     createDomElement(arrayOfGames[i]);
   }
 });
 
+// ==== AICI SE CREAZA JOCUL IN PAGINA ==============
 function createDomElement(gameObj) {
   var container1 = document.querySelector(".container");
   const gameELement = document.createElement("div");
@@ -62,14 +64,6 @@ function createDomElement(gameObj) {
         removeDeletedElementFromDOM(updateGameElement);
       } else if (event.target.classList.contains("editBtn")) {
         event.preventDefault();
-        const updatedGameTitle = updateGameElement.querySelector("#gameTitle")
-          .value;
-        const updatedGameDescription = updateGameElement.querySelector(
-          "#gameDescription"
-        ).value;
-        const updatedGameImage = updateGameElement.querySelector(
-          "#gameImageUrl"
-        ).value;
 
         removeDeletedElementFromDOM(updateGameElement);
       }
@@ -80,6 +74,8 @@ function removeDeletedElementFromDOM(domElement) {
   domElement.remove();
 }
 
+//===============================
+// AICI VALIDAM INPUTURILE
 function validateFormElement(inputElement, errorMessage) {
   if (inputElement.value === "") {
     if (!document.querySelector('[rel="' + inputElement.id + '"]')) {
