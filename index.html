@@ -8,7 +8,7 @@
   </head>
 
   <body>
-    <form class="creationForm" action="" method="POST">
+    <form class="creationForm">
       <label for="gameTitle">Title *</label>
       <input type="text" value="" name="gameTitle" id="gameTitle" />
 
@@ -31,10 +31,34 @@
       <label for="gameRelease">Release Date *</label>
       <input type="text" name="gameRelease" id="gameRelease" />
 
-      <button type="submit" class="submitBtn">Create Game</button>
+      <button class="submitBtn">Create Game</button>
     </form>
 
     <div class="container"></div>
+
+    <form id="updateForm">
+      <label for="gameTitleUpdate">Title *</label>
+      <input
+        type="text"
+        value=""
+        name="gameTitleUpdateUpdate"
+        id="gameTitleUpdate"
+      />
+
+      <label for="gameDescriptionUpdate">Description</label>
+      <textarea
+        name="gameDescriptionUpdate"
+        id="gameDescriptionUpdate"
+      ></textarea>
+
+      <label for="gameImageUrlUpdate">Image URL *</label>
+      <input type="text" name="gameImageUrlUpdate" id="gameImageUrlUpdate" />
+
+      <div id="updateFormButtons">
+        <button class="SaveChangesBtn" id="SaveChangesBtn">Save Changes</button>
+        <button class="cancelBtn" id="cancelBtn">Cancel</button>
+      </div>
+    </form>
 
     <script src="model.js"></script>
     <script src="view.js"></script>

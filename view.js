@@ -1,11 +1,9 @@
-// ================= 1 ========================
 getGameList(function (arrayOfGames) {
   for (var i = 0; i < arrayOfGames.length; i++) {
     createDomElement(arrayOfGames[i]);
   }
 });
 
-// ==== AICI SE CREAZA JOCUL IN PAGINA ==============
 function createDomElement(gameObj) {
   var container1 = document.querySelector(".container");
   const gameELement = document.createElement("div");
@@ -28,7 +26,7 @@ function createDomElement(gameObj) {
   container1.appendChild(gameELement);
 
   function clone() {
-    let itm = gameELement.childNodes[0].innerText;
+    let itm = gameELement.childNodes[0].innerText; //h1
     console.log(itm);
     let input = updateGameElement.childNodes[0][0];
     input.value += itm;
@@ -38,7 +36,7 @@ function createDomElement(gameObj) {
     let input1 = updateGameElement.childNodes[0][1];
     input1.value += itm1;
     console.log(input1.value);
-    let itm2 = gameELement.childNodes[3].innerText;
+    let itm2 = gameELement.childNodes[4].getAttribute("src");
     console.log(itm2);
     let input2 = updateGameElement.childNodes[0][2];
     input2.value += itm2;
@@ -50,22 +48,38 @@ function createDomElement(gameObj) {
     .addEventListener("click", function (event) {
       console.log(event.target);
       if (event.target.classList.contains("delete-btn")) {
-        deleteGame(gameElement.getAttribute("id"), function (apiResponse) {
+        deleteGame(gameELement.getAttribute("id"), function (apiResponse) {
+          console.log(event.target);
           console.log(apiResponse);
           removeDeletedElementFromDOM(event.target.parentElement);
         });
       } else if (event.target.classList.contains("update-btn")) {
         gameELement.appendChild(updateGameElement);
         clone();
+        console.log("ceva");
+        console.log(updateGameElement);
+      } else if (event.target.classList.contains("cancelBtn")) {
+        removeDeletedElementFromDOM(updateGameElement);
+      } else if (event.target.classList.contains("editBtn")) {
+        event.preventDefault();
+        const updatedGameTitle = updateGameElement.querySelector("#gameTitle")
+          .value;
+        const updatedGameDescription = updateGameElement.querySelector(
+          "#gameDescription"
+        ).value;
+        const updatedGameImage = updateGameElement.querySelector(
+          "#gameImageUrl"
+        ).value;
+
+        removeDeletedElementFromDOM(updateGameElement);
       }
     });
 }
 
-function removeDeletedElementFromDom(domElement) {
+function removeDeletedElementFromDOM(domElement) {
   domElement.remove();
 }
-//===============================
-// AICI VALIDAM INPUTURILE
+
 function validateFormElement(inputElement, errorMessage) {
   if (inputElement.value === "") {
     if (!document.querySelector('[rel="' + inputElement.id + '"]')) {

@@ -1,7 +1,6 @@
 var apiURL = "https://games-world.herokuapp.com";
 
-// ================== 1 ================
-function getGameList(callbackFunction) {
+function getGamesList(callbackFunction) {
   fetch(apiURL + "/games", {
     method: "GET",
     headers: {
@@ -16,56 +15,56 @@ function getGameList(callbackFunction) {
     });
 }
 
-// AICI SE STERGE JOCUL ==========
-//definim functia
 function deleteGame(gameID, callbackFunction) {
   fetch(apiURL + "/games/" + gameID, {
     method: "DELETE",
   })
-    .then(function (response) {
-      return response.text();
+    .then(function (r) {
+      return r.text();
     })
     .then(function (apiresponse) {
       callbackFunction(apiresponse);
     });
 }
-//=================================
 
-//AICI SE CREAZA UN NOU JOC============
-
-function createGameRequest(game, callbackCreateGame) {
+function createGameRequest(gameObject, callbackCreateGame) {
   fetch(apiURL + "/games", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: game,
+    body: gameObject,
   })
     .then(function (response) {
       return response.json();
     })
     .then(function (createdGame) {
+      console.log(createdGame);
       callbackCreateGame(createdGame);
     });
 }
-//===========================
 
-//AICI FACEM UPDATE LA GAME
-
-function updateGameRequest(gameId, updatedGame, callbackUpdateGame) {
-  fetch(apiURL + "/games/" + gameId, {
+function updateGameRequest(idOfGameToBeUpdated, updatedGameObj) {
+  console.log(apiURL + "/games/" + idOfGameToBeUpdated);
+  fetch(apiURL + "/games/" + idOfGameToBeUpdated, {
     method: "PUT",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: updatedGame,
+    body: updatedGameObj,
   })
     .then(function (response) {
-      return response.json();
+      var respJson = response.json();
+      return respJson;
     })
-    .then(function (updatedResponse) {
-      console.log(updatedResponse);
-      callbackUpdateGame(updatedResponse);
+    .then(function (updatedGame) {
+      // console.log("update finished");
+      // callbackUpdateGame();
     });
 }
-//================================
+
+// "application/json"
+// {"cheie": "valoare", "cheie2": "valoare2"}
+
+//application/x-www-form-urlencoded
+// cheie=valoare&cheie2=valoare2
