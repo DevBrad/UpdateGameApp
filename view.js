@@ -1,29 +1,30 @@
-// ================= 1 ========================
 getGameList(function (arrayOfGames) {
   for (var i = 0; i < arrayOfGames.length; i++) {
     createDomElement(arrayOfGames[i]);
   }
 });
 
-// ==== AICI SE CREAZA JOCUL IN PAGINA ==============
 function createDomElement(gameObj) {
   var container1 = document.querySelector(".container");
   const gameELement = document.createElement("div");
   gameELement.setAttribute("id", gameObj._id);
   gameELement.innerHTML = `<h1>${gameObj.title}</h1> 
-                        <p>${gameObj.description}</p> 
-                        <img src="${gameObj.imageUrl}" />
-                        <button class="delete-btn">Delete Game</button>
-                        <button class="update-btn">Edit Game</button>`;
+                            <p>${gameObj.description}</p> 
+                            <img src="${gameObj.imageUrl}" />
+                            <button class="delete-btn">Delete Game</button>
+                            <button class="update-btn">Edit Game</button>`;
 
   const updateGameElement = document.createElement("div");
   updateGameElement.innerHTML = `<form class="updateForm">
-  <input type="text" value="" name="gameTitle" id="gameTitle" placeholder="Enter new title here"/>
-  <textarea name="gameDescription" id="gameDescription" placeholder="Enter new description here"></textarea>
-  <input type="text" name="gameImageUrl" id="gameImageUrl" placeholder="Enter new image URL here"/>
-  <button class="editBtn">Save Changes</button>
-  <button class="cancelBtn">Cancel</button>
-  </form>`;
+                                    <label for="gameTitle">Title *</label>
+                                    <input type="text" value="" name="gameTitle" id="gameTitle"/>
+                                    <label for="gameDescription">Description</label>
+                                    <textarea name="gameDescription" id="gameDescription"></textarea>
+                                    <label for="gameImageUrl">Image URL *</label>
+                                    <input type="text" name="gameImageUrl" id="gameImageUrl"/>
+                                    <button class="editBtn">Save Changes</button>
+                                    <button class="cancelBtn">Cancel</button>
+                                  </form>`;
 
   container1.appendChild(gameELement);
 
@@ -33,7 +34,7 @@ function createDomElement(gameObj) {
     let input = updateGameElement.childNodes[0][0];
     input.value += itm;
     console.log(input.value);
-    let itm1 = gameELement.childNodes[2].innerText;
+    let itm1 = gameELement.childNodes[1].innerText;
     console.log(itm1);
     let input1 = updateGameElement.childNodes[0][1];
     input1.value += itm1;
@@ -58,13 +59,36 @@ function createDomElement(gameObj) {
       } else if (event.target.classList.contains("update-btn")) {
         gameELement.appendChild(updateGameElement);
         clone();
-        console.log("ceva");
-        console.log(updateGameElement);
       } else if (event.target.classList.contains("cancelBtn")) {
         removeDeletedElementFromDOM(updateGameElement);
       } else if (event.target.classList.contains("editBtn")) {
         event.preventDefault();
 
+        const updatedGameTitle = updateGameElement.querySelector("#gameTitle")
+          .value;
+        const updatedGameDescription = updateGameElement.querySelector(
+          "#gameDescription"
+        ).value;
+        const updatedGameImage = updateGameElement.querySelector(
+          "#gameImageUrl"
+        ).value;
+
+        function updateDom() {
+          gameELement.querySelector("h1").innerHTML = updatedGameTitle;
+          gameELement.querySelector("p").innerHTML = updatedGameDescription;
+          gameELement.querySelector("img").src = updatedGameImage;
+        }
+
+        var urlEncoded = new URLSearchParams();
+        urlEncoded.append("title", updatedGameTitle);
+        urlEncoded.append("description", updatedGameDescription);
+        urlEncoded.append("imageUrl", updatedGameImage);
+
+        updateGameRequest(
+          gameELement.getAttribute("id"),
+          urlEncoded,
+          updateDom
+        );
         removeDeletedElementFromDOM(updateGameElement);
       }
     });

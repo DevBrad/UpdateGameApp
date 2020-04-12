@@ -19,13 +19,16 @@ function getGameList(callbackFunction) {
 // AICI SE STERGE JOCUL ==========
 //definim functia
 function deleteGame(gameID, callbackFunction) {
+  console.log(gameID);
   fetch(apiURL + "/games/" + gameID, {
     method: "DELETE",
   })
-    .then(function (response) {
-      return response.text();
+    .then(function (r) {
+      console.log(r);
+      return r.text(); //3. De ce .text si nu .json?
     })
     .then(function (apiresponse) {
+      console.log(apiresponse);
       callbackFunction(apiresponse);
     });
 }
@@ -33,18 +36,20 @@ function deleteGame(gameID, callbackFunction) {
 
 //AICI SE CREAZA UN NOU JOC============
 
-function createGameRequest(game, callbackCreateGame) {
+function createGameRequest(gameObj, callbackCreateGame) {
   fetch(apiURL + "/games", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: game,
+    body: gameObj, //4. De ce este necesar aici si body?
   })
     .then(function (response) {
+      console.log(response);
       return response.json();
     })
     .then(function (createdGame) {
+      console.log(createdGame);
       callbackCreateGame(createdGame);
     });
 }
@@ -52,13 +57,13 @@ function createGameRequest(game, callbackCreateGame) {
 
 //AICI FACEM UPDATE LA GAME
 
-function updateGameRequest(gameId, updatedGame, callbackUpdateGame) {
-  fetch(apiURL + "/games/" + gameId, {
+function updateGameRequest(gameid, updatedGameObj, callbackUpdateGame) {
+  fetch(apiURL + "/games/" + gameid, {
     method: "PUT",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: updatedGame,
+    body: updatedGameObj,
   })
     .then(function (response) {
       return response.json();
