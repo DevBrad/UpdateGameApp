@@ -25,7 +25,7 @@ function deleteGame(gameID, callbackFunction) {
   })
     .then(function (r) {
       console.log(r);
-      return r.text(); //3. De ce .text si nu .json?
+      return r.text(); 
     })
     .then(function (apiresponse) {
       console.log(apiresponse);
@@ -42,7 +42,7 @@ function createGameRequest(gameObj, callbackCreateGame) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: gameObj, //4. De ce este necesar aici si body?
+    body: gameObj, 
   })
     .then(function (response) {
       console.log(response);
